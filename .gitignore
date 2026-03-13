@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Test results and reports
+test-results/
+playwright-report/
+blob-report/
+test-output/
+
+# Playwright
+playwright/.cache/
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Optional: lock file (uncomment if you don't want to commit it)
+# package-lock.json
