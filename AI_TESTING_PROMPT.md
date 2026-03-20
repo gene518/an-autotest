@@ -14,11 +14,17 @@
 - **多浏览器支持**: Chromium, Firefox, WebKit
 - **录制要求**: 完整截图 + 视频录制 + 操作追踪
 
-### 固定登录流程
-```javascript
-// 合并登录+跳转URL（登录成功后自动跳转IM页面）
-await page.goto('https://www.jk.cn/landing_smspassword?appId=1&mobile=16013156866&needRedirect=true&smsPassword=666666&returnUrl=https%3A%2F%2Fwww.jk.cn%2Fturky%2F%3FisImmsersive%3Dtrue%26native_back_button_color%3D0%26update_native_backbtn%3Dtrue%23%2Fim%2F10407%3FaccessEntrance%3DAIKYSRHD%26oneKey%3D1');
-```
+### 用例起始步骤复用标准
+1. **所有业务测试用例在执行开始时，必须先执行“访问 IM 并开启新对话”公共步骤**
+2. **禁止**在各个测试文件中重复手写以下前置步骤：访问登录链接、等待 IM 页面加载、校验顶部导航、校验输入框、点击右上角开启新对话按钮
+3. 公共步骤统一复用 [specs/welcome_message/welcome_message.flow.ts](specs/welcome_message/welcome_message.flow.ts) 中的 `openNewConversation(page)`
+4. [specs/welcome_message/welcome_message.spec.ts](specs/welcome_message/welcome_message.spec.ts) 是该公共步骤的专项验证用例；其他业务用例不得复制其中的前置实现代码，只能调用公共方法
+5. 后续如果“登录方式 / 页面加载校验 / 新对话按钮定位 / 欢迎话术断言”发生变化，只允许修改这一处公共步骤，并由所有业务用例自动继承
+
+**业务操作简述：**
+- 用例开始先调用 `openNewConversation(page)`，完成登录、进入 IM、校验页面并开启新对话
+- 业务用例只继续编写“发送什么内容、验证什么结果”这部分逻辑
+- 不要在业务用例里重复实现前置步骤代码
 
 ### 代码编写操作要求
 1. **输入框发送方式**: 输入框发送文本不要使用Enter键发送，必须使用输入文本后输入框的发送按钮发送
@@ -28,6 +34,7 @@ await page.goto('https://www.jk.cn/landing_smspassword?appId=1&mobile=1601315686
 ### 测试结构原则
 1. **计划驱动**: 所有测试用例必须基于 `plan/` 目录中的测试计划文档
 2. **分层组织**: 按测试计划创建对应目录，按测试套件进一步分组
+3. **公共步骤复用**: 跨用例重复的公共前置流程必须抽到共享方法，优先复用“开启新对话”公共步骤，不允许在多个 spec 中复制同一段前置代码
 
 ## 📁 目录结构约定
 

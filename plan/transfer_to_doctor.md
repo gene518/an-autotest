@@ -12,19 +12,35 @@
 
 #### 1.1. 购买非处方药转医生
 
-**File:** `transfer_to_doctor/otc_to_doctor`
+**File:** `transfer_to_doctor/a_otc_to_doctor`
+
+**Steps:**
+  1.对话框输入：我要买红霉素软膏
+    - expect: 输入框成功输入响应文字。
+  2. 点击输入框右边的发送按钮
+    - expect: 输入框清空
+    - expect: 输入内容发送到对话中。
+    - expect: 对话下面有ai回复的药品介绍。
+    - expect: 对话下面有ai回复的药品购买卡片。
+    - expect: 药品购买卡片有闪电购药标签。
+    - expect: ai回复有一句话包含"转至在线医生"。
+    - expect: 对话中有一句信息素，内容包含xx科为您服务。
+    - expect: 医生发的一句话包含我是xx医生，正在查看您的历史聊天记录。
+
+#### 1.2. 购买处方药转医生
+**File:** `transfer_to_doctor/b_prescription_to_doctor.spec`
 
 **Steps:**
   1. 访问登录并跳转URL（合并链接）：https://www.jk.cn/landing_smspassword?appId=1&mobile=16013156866&needRedirect=true&smsPassword=666666&returnUrl=https%3A%2F%2Fwww.jk.cn%2Fturky%2F%3FisImmsersive%3Dtrue%26native_back_button_color%3D0%26update_native_backbtn%3Dtrue%23%2Fim%2F10407%3FaccessEntrance%3DAIKYSRHD%26oneKey%3D1
     - expect: 登录成功并自动跳转到IM页面
     - expect: 页面成功加载并显示AI医生标题
   2. 等待页面完全加载并验证核心元素
-    - expect: 顶部导航栏显示'对话'和'我的'标签
+    - expect: 顶部导航栏显示'对话'和'档案'标签
     - expect: 聊天输入框正常显示
     - expect: AI欢迎消息加载完成
   4. 点击右上角开启新对话图标，图标是一个对话图标，中间一个加号。
     - expect: 显示欢迎话术
-  5. 对话框输入：我要买红霉素软膏
+  5. 对话框输入：我要买依折麦布片
     - expect: 输入框成功输入响应文字。
   6. 点击输入框右边的发送按钮
     - expect: 输入框清空
@@ -36,16 +52,16 @@
     - expect: 对话中有一句信息素，内容包含xx科为您服务。
     - expect: 医生发的一句话包含我是xx医生，正在查看您的历史聊天记录。
 
-#### 1.2. 转人工转医生
+#### 1.3. 转人工转医生
 
-**File:** `transfer_to_doctor/switch_to_manual.spec.ts`
+**File:** `transfer_to_doctor/c_switch_to_manual.spec.ts`
 
 **Steps:**
   1. 访问登录并跳转URL（合并链接）：https://www.jk.cn/landing_smspassword?appId=1&mobile=16013156866&needRedirect=true&smsPassword=666666&returnUrl=https%3A%2F%2Fwww.jk.cn%2Fturky%2F%3FisImmsersive%3Dtrue%26native_back_button_color%3D0%26update_native_backbtn%3Dtrue%23%2Fim%2F10407%3FaccessEntrance%3DAIKYSRHD%26oneKey%3D1
     - expect: 登录成功并自动跳转到IM页面
     - expect: 页面成功加载并显示AI医生标题
   2. 等待页面完全加载并验证核心元素
-    - expect: 顶部导航栏显示'对话'和'我的'标签
+    - expect: 顶部导航栏显示'对话'和'档案'标签
     - expect: 聊天输入框正常显示
     - expect: AI欢迎消息加载完成
   2. 点击右上角开启新对话图标，图标是一个对话图标，中间一个加号。
@@ -63,16 +79,16 @@
     - expect: 医生发的一句话包含我是xx医生，正在查看您的历史聊天记录。
 
 
-#### 1.3. 积分转人工
+#### 1.4. 积分转人工
 
-**File:** `transfer_to_doctor/points_to_doctor.spec.ts`
+**File:** `transfer_to_doctor/d_points_to_doctor.spec.ts`
 
 **Steps:**
   1. 访问登录并跳转URL（合并链接）：https://www.jk.cn/landing_smspassword?appId=1&mobile=16013156866&needRedirect=true&smsPassword=666666&returnUrl=https%3A%2F%2Fwww.jk.cn%2Fturky%2F%3FisImmsersive%3Dtrue%26native_back_button_color%3D0%26update_native_backbtn%3Dtrue%23%2Fim%2F10407%3FaccessEntrance%3DAIKYSRHD%26oneKey%3D1
     - expect: 登录成功并自动跳转到IM页面
     - expect: 页面成功加载并显示AI医生标题
   2. 等待页面完全加载并验证核心元素
-    - expect: 顶部导航栏显示'对话'和'我的'标签
+    - expect: 顶部导航栏显示'对话'和'档案'标签
     - expect: 聊天输入框正常显示
     - expect: AI欢迎消息加载完成
   4. 点击右上角开启新对话图标，图标是一个对话图标，中间一个加号。
@@ -84,9 +100,34 @@
     - expect: 医生发的一句话包含我是xx医生，正在查看您的历史聊天记录。
 
 
+
+**File:** `transfer_to_doctor/prescription_to_doctor.spec`
+
+**Steps:**
+  1. 访问登录并跳转URL（合并链接）：https://www.jk.cn/landing_smspassword?appId=1&mobile=16013156866&needRedirect=true&smsPassword=666666&returnUrl=https%3A%2F%2Fwww.jk.cn%2Fturky%2F%3FisImmsersive%3Dtrue%26native_back_button_color%3D0%26update_native_backbtn%3Dtrue%23%2Fim%2F10407%3FaccessEntrance%3DAIKYSRHD%26oneKey%3D1
+    - expect: 登录成功并自动跳转到IM页面
+    - expect: 页面成功加载并显示AI医生标题
+  2. 等待页面完全加载并验证核心元素
+    - expect: 顶部导航栏显示'对话'和'我的'标签
+    - expect: 聊天输入框正常显示
+    - expect: AI欢迎消息加载完成
+  4. 点击右上角开启新对话图标，图标是一个对话图标，中间一个加号。
+    - expect: 显示欢迎话术
+  5. 对话框输入：我要我要买依折麦布片
+    - expect: 输入框成功输入响应文字。
+  6. 点击输入框右边的发送按钮
+    - expect: 输入框清空
+    - expect: 输入内容发送到对话中。
+    - expect: 对话下面有ai回复的药品介绍。
+    - expect: 对话下面有ai回复的药品购买卡片。
+    - expect: 药品购买卡片有闪电购药标签。
+    - expect: ai回复有一句话包含"转至在线医生"。
+    - expect: 对话中有一句信息素，内容包含xx科为您服务。
+    - expect: 医生发的一句话包含我是xx医生，正在查看您的历史聊天记录。
+
 #### 1.5. 问诊转人工
 
-**File:** `transfer_to_doctor/consultation_summary_to_doctor.spec.ts`
+**File:** `transfer_to_doctor/e_consultation_summary_to_doctor.spec.ts`
 
 **测试配置:**
 - 测试超时时间：2分钟（120000ms）
@@ -103,7 +144,7 @@
 **步骤2: 访问IM页面并验证**
 - 访问IM页面
 - **断言:** 验证'对话'标签（使用`exact: true`）
-- **断言:** 验证'我的'标签
+- **断言:** 验证'档案'标签
 - **断言:** 验证输入框可见
 
 **步骤3: 开启新对话**

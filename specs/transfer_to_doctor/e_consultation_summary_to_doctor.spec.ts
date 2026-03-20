@@ -3,31 +3,19 @@
 
 import { test, expect } from '@playwright/test';
 
+import { openNewConversation } from '../welcome_message/welcome_message.flow';
+
 test.describe('问诊转人工', () => {
-  // 设置测试超时时间为2分钟，因为问诊流程需要多轮交互
-  test.setTimeout(120000);
-
   test('问诊转人工转医生流程验证', async ({ page }) => {
-    // 1. 访问登录URL并自动跳转到IM页面（合并链接）
-    await page.goto('https://www.jk.cn/landing_smspassword?appId=1&mobile=16013156866&needRedirect=true&smsPassword=666666&returnUrl=https%3A%2F%2Fwww.jk.cn%2Fturky%2F%3FisImmsersive%3Dtrue%26native_back_button_color%3D0%26update_native_backbtn%3Dtrue%23%2Fim%2F10407%3FaccessEntrance%3DAIKYSRHD%26oneKey%3D1');
-
-    // 等待页面跳转完成并验证核心元素
-    await expect(page.getByText('对话', { exact: true })).toBeVisible();
-    await expect(page.getByText('我的', { exact: true })).toBeVisible();
-    await expect(page.getByRole('textbox', { name: '有问题尽管问我...' })).toBeVisible();
-
-    // 3. 点击右上角开启新对话图标
-    await page.getByRole('button').nth(1).click();
-    // 等待欢迎消息出现（使用包含匹配避免多个匹配问题）
-    await expect(page.locator('.welcome-card-bg__desc').first()).toBeVisible({ timeout: 10000 });
+    // 设置测试超时时间为2分钟，因为问诊流程需要多轮交互
+    test.setTimeout(120000);
+    const { inputBox, sendButton } = await openNewConversation(page);
 
     // 4. 发送"腹痛怎么办"
-    const inputBox = page.getByRole('textbox', { name: '有问题尽管问我' });
     await inputBox.click();
     await inputBox.fill('腹痛怎么办');
     
     // 使用tap()发送消息（移动端必需）
-    const sendButton = page.locator('span.chat-send-btn');
     await sendButton.tap();
 
     // 5. 等待就诊人选择卡片出现并选择第一个就诊人
