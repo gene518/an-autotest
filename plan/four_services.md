@@ -15,29 +15,18 @@
 **File:** `four_services/chronic_disease_weight_loss_direct.spec.ts`
 
 **Steps:**
-  1. 访问登录并跳转到IM页面
-     - expect: 登录成功并自动跳转到IM页面
-     - expect: 页面成功加载并显示AI医生标题
-  2. 等待页面完全加载
-     - expect: 聊天输入框正常显示
-  3. 点击右上角开启新对话图标
-     - expect: 显示欢迎话术
-  4. 在对话框输入减重直接意图内容（如：超重/肥胖该怎么办？如何减脂？）并发送
+  1. 在对话框输入如何减脂？）并发送
      - expect: 输入内容发送到对话中
-     - expect: AI回复中出现问诊相关引导，而非四到服务推荐（问诊优于四到）
+     - expect: 回答中有一个慢病管理服务卡片
+     - expect: 点击卡片中的按钮，可以正常跳转，跳转后页面正常加载
 
 #### 1.2. 减重间接意图识别
 
 **File:** `four_services/chronic_disease_weight_loss_indirect.spec.ts`
 
 **Steps:**
-  1. 访问登录并跳转到IM页面
-     - expect: 登录成功并自动跳转到IM页面
-  2. 等待页面完全加载
-     - expect: 聊天输入框正常显示
-  3. 点击右上角开启新对话图标
-     - expect: 显示欢迎话术
-  4. 在对话框输入间接意图内容（如：走路喘、肥胖导致关节痛）并发送
+//todo: 待补充具体步骤  
+  1. 在对话框输入间接意图内容（如：走路喘、肥胖导致关节痛）并发送
      - expect: 输入内容发送到对话中
      - expect: AI正确识别间接意图，回复中优先引导问诊
 

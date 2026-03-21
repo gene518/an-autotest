@@ -1,27 +1,22 @@
 // spec: plan/transfer_to_doctor.md
-// seed: specs/seed.spec.ts
+// seed: seed.spec.ts
 
 import { test, expect } from '@playwright/test';
 
-import { openNewConversation } from '../welcome_message/welcome_message.flow';
+import { IMBaseFlow } from '../shared/im-base';
 
 test.describe('转人工转医生', () => {
   test('转人工转医生流程验证', async ({ page }) => {
-    const { inputBox, sendButton } = await openNewConversation(page);
+    const im = await IMBaseFlow.openNewConversation(page);
 
     // 4. 对话框输入：转人工
-    await inputBox.click();
-    await inputBox.fill('转人工');
-
-    // 5. 点击输入框右边的发送按钮（移动端使用 tap 模拟触摸点击）
-    await sendButton.waitFor({ state: 'visible' });
-    await sendButton.tap();
+    await im.sendMessage('转人工');
 
     // 等待AI回复
     await page.waitForTimeout(10000);
 
     // 验证输入框清空
-    const inputValue = await inputBox.inputValue();
+    const inputValue = await im.inputBox.inputValue();
     expect(inputValue).toBe('');
 
     // 验证输入内容发送到对话中

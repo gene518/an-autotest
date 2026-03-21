@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "playwright test",
+    "test": "playwright test; npx playwright show-report \"$(ls -1dt test-results/*/html-report 2>/dev/null | head -1)\"",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:ui": "playwright test --ui",
@@ -20,6 +20,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.48.2"
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^25.5.0"
   }
 }

@@ -4,7 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
 const reportName = getReportName();
 
 export default defineConfig({
-  testDir: './specs',                          // 测试用例目录
+  testDir: './test_case',                      // 测试用例目录
   outputDir: `test-results/${reportName}/artifacts`,  // 测试产物输出目录（按时间戳+用例路径分组）
   fullyParallel: false,                        // 禁用完全并行，确保测试按顺序执行
   forbidOnly: !!process.env.CI,                // CI环境禁止使用.only
@@ -13,7 +13,7 @@ export default defineConfig({
   reporter: [
     ['html', {                                 // HTML报告配置
       outputFolder: `test-results/${reportName}/html-report`, // HTML报告按时间戳+用例路径分组
-      open: 'always'                           // 测试完成后自动打开报告
+      open: 'always'                           // 默认自动打开
     }],
     ['list']                                   // 控制台列表格式输出
   ],
@@ -31,6 +31,7 @@ export default defineConfig({
       name: 'chromium',                        // 项目名称
       use: { 
         ...devices['iPhone 14 Pro Max'],       // 模拟iPhone 14 Pro Max设备
+        viewport: { width: 500, height: 1000 }, // 显式锁定提示词要求的分辨率
         headless: false,                       // 非无头模式运行
         video: 'on',                           // 开启视频录制
         launchOptions: {
@@ -47,10 +48,10 @@ export default defineConfig({
 function getTestPath() {
   const args = process.argv;
   for (const arg of args) {
-    // 匹配 specs/ 开头的路径
-    if (arg.includes('specs/')) {
-      // 提取路径，去掉 specs/ 前缀和 .spec.ts 后缀
-      const match = arg.match(/specs\/(.+?)(\.spec\.ts)?$/);
+    // 匹配 test_case/ 开头的路径
+    if (arg.includes('test_case/')) {
+      // 提取路径，去掉 test_case/ 前缀和 .spec.ts 后缀
+      const match = arg.match(/test_case\/(.+?)(\.spec\.ts)?$/);
       if (match) {
         // 将路径中的 / 替换为 -
         return match[1].replace(/\.spec\.ts$/, '').replace(/\//g, '-');

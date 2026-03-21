@@ -1,15 +1,15 @@
 // spec: plan/transfer_to_doctor.md
-// seed: specs/seed.spec.ts
+// seed: seed.spec.ts
 
 import { test, expect } from '@playwright/test';
 
-import { openNewConversation } from '../welcome_message/welcome_message.flow';
+import { IMBaseFlow } from '../shared/im-base';
 
 test.describe('积分转人工', () => {
   test('积分转人工转医生流程验证', async ({ page }) => {
     // 设置测试超时为5分钟
     test.setTimeout(300000);
-    const { inputBox, sendButton } = await openNewConversation(page);
+    const im = await IMBaseFlow.openNewConversation(page);
 
     // 5. 循环发送消息直到触发转医生流程
     const message = '硼酸洗剂如何使用';
@@ -17,18 +17,7 @@ test.describe('积分转人工', () => {
     let transferTriggered = false;
     
     for (let i = 1; i <= maxAttempts; i++) {
-      // 点击输入框
-      await inputBox.click();
-      
-      // 清空并输入消息
-      await inputBox.fill('');
-      await inputBox.fill(message);
-      
-     // 等待发送按钮出现（输入文本后，+号变成发送按钮）
-      await sendButton.waitFor({ state: 'visible', timeout: 3000 });
-      
-      // 模拟真实用户触摸点击发送按钮（移动端使用 tap）
-      await sendButton.tap();
+      await im.sendMessage(message, { timeout: 3000 });
       
       // 等待AI回复（等待新消息出现）
       await page.waitForTimeout(8000);

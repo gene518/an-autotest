@@ -1,22 +1,18 @@
 // spec: plan/transfer_to_doctor.md
-// seed: specs/seed.spec.ts
+// seed: seed.spec.ts
 
 import { test, expect } from '@playwright/test';
 
-import { openNewConversation } from '../welcome_message/welcome_message.flow';
+import { IMBaseFlow } from '../shared/im-base';
 
 test.describe('问诊转人工', () => {
   test('问诊转人工转医生流程验证', async ({ page }) => {
     // 设置测试超时时间为2分钟，因为问诊流程需要多轮交互
     test.setTimeout(120000);
-    const { inputBox, sendButton } = await openNewConversation(page);
+    const im = await IMBaseFlow.openNewConversation(page);
 
     // 4. 发送"腹痛怎么办"
-    await inputBox.click();
-    await inputBox.fill('腹痛怎么办');
-    
-    // 使用tap()发送消息（移动端必需）
-    await sendButton.tap();
+    await im.sendMessage('腹痛怎么办');
 
     // 5. 等待就诊人选择卡片出现并选择第一个就诊人
     console.log('等待就诊人选择卡片...');
@@ -156,12 +152,7 @@ test.describe('问诊转人工', () => {
           console.log(`  - 发送按钮未出现，改为文本回复`);
           // 安全的文本输入，添加重试机制
           try {
-            const textInput = page.getByRole('textbox', { name: '有问题尽管问我' });
-            await textInput.waitFor({ state: 'visible', timeout: 5000 });
-            await textInput.click();
-            await textInput.fill('不清楚');
-            const sendBtn = page.locator('span.chat-send-btn');
-            await sendBtn.tap();
+            await im.sendMessage('不清楚', { ensureMessageVisible: false, timeout: 5000 });
           } catch (inputError) {
             console.log('文本输入也失败，跳过此轮');
           }
@@ -169,12 +160,7 @@ test.describe('问诊转人工', () => {
       } else {
         // 无选项卡片：输入"不清楚"并发送
         console.log(`第${i + 1}轮问诊：无选项卡片，回复"不清楚"`);
-        const textInput = page.getByRole('textbox', { name: '有问题尽管问我' });
-        await textInput.click();
-        await textInput.fill('不清楚');
-        
-        const sendBtn = page.locator('span.chat-send-btn');
-        await sendBtn.tap();
+        await im.sendMessage('不清楚', { ensureMessageVisible: false });
       }
     }
 
