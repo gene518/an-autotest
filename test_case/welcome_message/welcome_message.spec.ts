@@ -1,7 +1,7 @@
 // spec: plan/welcome_message.md
 // seed: seed.spec.ts
 
-import { test } from '@playwright/test';
+import { test } from '../shared/base-test';
 
 import { IMBaseFlow } from '../shared/im-base';
 

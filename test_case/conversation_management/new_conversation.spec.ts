@@ -1,7 +1,7 @@
 // spec: test_case/conversation_management/conversation_management.md
 // seed: seed.spec.ts
 
-import { expect, test } from '@playwright/test';
+import { expect, test } from '../shared/base-test';
 
 import { IMBaseFlow } from '../shared/im-base';
 

@@ -31,7 +31,7 @@ export default defineConfig({
       name: 'chromium',                        // 项目名称
       use: { 
         // 不使用 devices 预设，避免其携带 defaultBrowserType:'webkit' 导致无法使用本地 Chrome
-        viewport: { width: 500, height: 1000 }, // 模拟移动端分辨率
+        viewport: { width: 450, height: 1200 }, // 模拟移动端分辨率
         userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) CriOS/120.0.0.0 Mobile/15E148 Safari/604.1', // iPhone Chrome UA
         isMobile: true,                        // 开启移动端模拟
         hasTouch: true,                        // 开启触摸事件

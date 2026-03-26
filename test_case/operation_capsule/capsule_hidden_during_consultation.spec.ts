@@ -1,7 +1,7 @@
 // spec: plan/operation_capsule.md
 // seed: seed.spec.ts
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../shared/base-test';
 
 import { IMBaseFlow } from '../shared/im-base';
 
