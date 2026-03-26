@@ -30,12 +30,18 @@ export default defineConfig({
     {
       name: 'chromium',                        // 项目名称
       use: { 
-        ...devices['iPhone 14 Pro Max'],       // 模拟iPhone 14 Pro Max设备
-        viewport: { width: 500, height: 1000 }, // 显式锁定提示词要求的分辨率
+        // 不使用 devices 预设，避免其携带 defaultBrowserType:'webkit' 导致无法使用本地 Chrome
+        viewport: { width: 500, height: 1000 }, // 模拟移动端分辨率
+        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/537.36 (KHTML, like Gecko) CriOS/120.0.0.0 Mobile/15E148 Safari/604.1', // iPhone Chrome UA
+        isMobile: true,                        // 开启移动端模拟
+        hasTouch: true,                        // 开启触摸事件
+        deviceScaleFactor: 3,                  // iPhone 14 Pro Max 像素比
         headless: false,                       // 非无头模式运行
         video: 'on',                           // 开启视频录制
         launchOptions: {
-          slowMo: 1000,                        // 每个操作间隔1秒，便于观察（必须放在launchOptions中才生效）
+          executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', // 使用本地 Chrome
+          // executablePath: 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe', // windoww用本地 Chrome
+          slowMo: 1000,                        // 每个操作间隔1秒，便于观察
         },
       },
     },
