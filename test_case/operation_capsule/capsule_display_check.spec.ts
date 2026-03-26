@@ -1,4 +1,4 @@
-// spec: plan/operation_capsule.md
+// spec: test_case/operation_capsule/operation_capsule.md
 // seed: seed.spec.ts
 
 import { test, expect } from '../shared/base-test';
